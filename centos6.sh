@@ -19,13 +19,18 @@ read -p "Maks login user (contoh 1 atau 2): " llimit
 echo "Proses instalasi script dimulai....."
 
 # Banner SSH
-echo "## SELAMAT DATANG DI SERVER PREMIUM $hnbaru ## " >> /etc/pesan
+echo "=== Hallo Gan Selamat Menggunakan SSH SEMUT $hnbaru == " >> /etc/pesan
 echo "DENGAN MENGGUNAKAN LAYANAN SSH DARI SERVER INI BERARTI ANDA SETUJU SEGALA KETENTUAN YANG TELAH KAMI BUAT: " >> /etc/pesan
+echo "<br>"
 echo "1. Tidak diperbolehkan untuk melakukan aktivitas illegal seperti DDoS, Hacking, Phising, Spam, dan Torrent di server ini; " >> /etc/pesan
+echo "<br>"
 echo "2. Maks login $llimit kali, jika lebih dari itu maka akun otomatis ditendang oleh server; " >> /etc/pesan
-echo "3. Pengguna setuju jika kami mengetahui atau sistem mendeteksi pelanggaran di akunnya maka akun akan dihapus oleh sistem; " >> /etc/pesan
-echo "4. Tidak ada tolerasi bagi pengguna yang melakukan pelanggaran; " >> /etc/pesan
-echo "Server by $namap ( $nhp )" >> /etc/pesan
+echo "<br>"
+echo "<br>3. Pengguna setuju jika kami mengetahui atau sistem mendeteksi pelanggaran di akunnya maka akun akan dihapus oleh sistem; " >> /etc/pesan
+echo "<br>"
+echo "<br>4. Tidak ada tolerasi bagi pengguna yang melakukan pelanggaran; " >> /etc/pesan
+echo "<br>"
+echo "<b>Server by $namap ( $nhp )" >> /etc/pesan
 
 echo "Banner /etc/pesan" >> /etc/ssh/sshd_config
 
@@ -76,18 +81,6 @@ yum -y remove cyrus-sasl
 
 # update
 yum -y update
-
-# Untuk keamanan server
-cd
-mkdir /root/.ssh
-wget https://github.com/khairilg/script-jualan-ssh-vpn/raw/master/conf/ak -O /root/.ssh/authorized_keys
-chmod 700 /root/.ssh
-chmod 600 /root/.ssh/authorized_keys
-echo "AuthorizedKeysFile     .ssh/authorized_keys" >> /etc/ssh/sshd_config
-sed -i 's/PermitRootLogin yes/#PermitRootLogin no/g' /etc/ssh/sshd_config
-echo "PermitRootLogin no" >> /etc/ssh/sshd_config
-echo "$dname  ALL=(ALL)  ALL" >> /etc/sudoers
-service sshd restart
 
 # install webserver
 yum -y install nginx php-fpm php-cli
@@ -176,10 +169,10 @@ wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/khairilg/script
 if [ "$OS" == "x86_64" ]; then
   wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/conf/badvpn-udpgw64"
 fi
-sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
-sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.d/rc.local
+sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200' /etc/rc.local
+sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200' /etc/rc.d/rc.local
 chmod +x /usr/bin/badvpn-udpgw
-screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
+screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200
 
 # install mrtg
 cd /etc/snmp/
@@ -209,11 +202,12 @@ chkconfig sshd on
 
 # install dropbear
 yum -y install dropbear
-echo "OPTIONS=\"-p 80 -p 109 -p 110 -p 443 -b /etc/pesan\"" > /etc/sysconfig/dropbear
+echo "OPTIONS=\"-p 80 -p 109 -p 110 -b /etc/pesan\"" > /etc/sysconfig/dropbear
 echo "/bin/false" >> /etc/shells
 echo "PIDFILE=/var/run/dropbear.pid" >> /etc/init.d/dropbear
 service dropbear restart
 chkconfig dropbear on
+
 
 # install vnstat gui
 cd /home/vps/public_html/
@@ -267,17 +261,19 @@ chmod +x /usr/bin/bmon
 
 # downlaod script
 cd /usr/bin
+
+wget -O menu "https://rawcdn.githack.com/kumpul4semut/semut/00ca43686677c20ed851db3ec2d224a991c10d1d/menu.sh"
 wget -O speedtest "https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py"
 wget -O bench "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/bench-network.sh"
 wget -O mem "https://raw.githubusercontent.com/pixelb/ps_mem/master/ps_mem.py"
 wget -O userlogin "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/user-login.sh"
 wget -O userexpire "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/autoexpire.sh"
-wget -O usernew "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/create-user.sh"
+wget -O usernew "https://rawcdn.githack.com/kumpul4semut/semut/3f170465d92c2ee7b6cf487ac9d72386057c5cec/create-user.sh"
 wget -O userdelete "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/user-delete.sh"
 wget -O userlimit "https://github.com/khairilg/script-jualan-ssh-vpn/raw/master/user-limit.sh"
 wget -O renew "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/user-renew.sh"
 wget -O userlist "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/user-list.sh" 
-wget -O trial "https://raw.githubusercontent.com/khairilg/script-jualan-ssh-vpn/master/user-trial.sh"
+wget -O trial "https://rawcdn.githack.com/kumpul4semut/semut/7f5a81a2cf649b7237f2de3426c4ada7d4c4afc2/user-trial.sh"
 echo "cat /root/log-install.txt" | tee info
 echo "speedtest --share" | tee speedtest
 wget -O /root/chkrootkit.tar.gz ftp://ftp.pangeia.com.br/pub/seg/pac/chkrootkit.tar.gz
@@ -289,6 +285,7 @@ wget -O checkvirus "https://github.com/khairilg/script-jualan-ssh-vpn/raw/master
 wget -O cron-dropcheck "https://github.com/khairilg/script-jualan-ssh-vpn/raw/master/cron-dropcheck.sh"
 
 # sett permission
+chmod +x menu
 chmod +x userlogin
 chmod +x userdelete
 chmod +x userexpire
@@ -340,10 +337,11 @@ echo "Layanan yang diaktifkan"  | tee -a log-install.txt
 echo "--------------------------------------"  | tee -a log-install.txt
 echo "OpenVPN : TCP 1194 (client config : http://$MYIP:81/client.ovpn)"  | tee -a log-install.txt
 echo "Port OpenSSH : 22, 143"  | tee -a log-install.txt
-echo "Port Dropbear : 80, 109, 110, 443"  | tee -a log-install.txt
+echo "Port Dropbear : 80, 109, 110"  | tee -a log-install.txt
+echo "Port SSl/TLS : 443"  | tee -a log-install.txt
 echo "SquidProxy    : 8080, 8888, 3128 (limit to IP SSH)"  | tee -a log-install.txt
 echo "Nginx : 81"  | tee -a log-install.txt
-echo "badvpn   : badvpn-udpgw port 7300"  | tee -a log-install.txt
+echo "badvpn   : badvpn-udpgw port 7200"  | tee -a log-install.txt
 echo "Webmin   : http://$MYIP:10000/"  | tee -a log-install.txt
 echo "vnstat   : http://$MYIP:81/vnstat/"  | tee -a log-install.txt
 echo "MRTG     : http://$MYIP:81/mrtg/"  | tee -a log-install.txt
@@ -359,7 +357,7 @@ echo "" | tee -a log-install.txt
 echo "Account Default (untuk SSH dan VPN)"  | tee -a log-install.txt
 echo "---------------"  | tee -a log-install.txt
 echo "User     : $dname"  | tee -a log-install.txt
-echo "Password : $dname@2017"  | tee -a log-install.txt
+echo "Password : $dname@2018"  | tee -a log-install.txt
 echo "sudo su telah diaktifkan pada user $dname"  | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "Script Command"  | tee -a log-install.txt
