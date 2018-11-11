@@ -251,4 +251,4 @@ echo "VPS AUTO REBOOT TIAP JAM 12 MALAM"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "==========================================="  | tee -a log-install.txt
 cd
-rm -f /root/mbakdeb.sh
+rm -f /root/debian8.sh
