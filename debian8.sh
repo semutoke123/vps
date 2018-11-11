@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Original script by fornesia, rzengineer and fawzya
-# Mod by Bustami Arifin
+# Mod by kumpul4semut
 # ==================================================
 
 # initialisasi var
@@ -16,7 +16,7 @@ state=Jakarta
 locality=Tebet
 organization=Cendrawasih
 organizationalunit=IT
-commonname=kumpul4semut.net
+commonname=premiumssh.xyz
 email=semutkece6@.com
 
 # go to root
@@ -94,9 +94,9 @@ wget -O /usr/bin/badvpn-udpgw "http://vira.cf/badvpn-udpgw"
 if [ "$OS" == "x86_64" ]; then
   wget -O /usr/bin/badvpn-udpgw "http://vira.cf/badvpn-udpgw64"
 fi
-sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
+sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200' /etc/rc.local
 chmod +x /usr/bin/badvpn-udpgw
-screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
+screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200
 
 # setting port ssh
 cd
@@ -107,7 +107,7 @@ service ssh restart
 # install dropbear
 apt-get -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=3128/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 143"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
@@ -139,7 +139,7 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 443
-connect = 127.0.0.1:3128
+connect = 127.0.0.1:143
 
 END
 
@@ -215,11 +215,11 @@ echo ""  | tee -a log-install.txt
 echo "Service"  | tee -a log-install.txt
 echo "-------"  | tee -a log-install.txt
 echo "OpenSSH  : 22, 444"  | tee -a log-install.txt
-echo "Dropbear : 143, 3128"  | tee -a log-install.txt
+echo "Dropbear : 143"  | tee -a log-install.txt
 echo "SSL      : 443"  | tee -a log-install.txt
 echo "Squid3   : 8000, 8080 (limit to IP SSH)"  | tee -a log-install.txt
 echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.ovpn)"  | tee -a log-install.txt
-echo "badvpn   : badvpn-udpgw port 7300"  | tee -a log-install.txt
+echo "badvpn   : badvpn-udpgw port 7200"  | tee -a log-install.txt
 echo "nginx    : 81"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Script"  | tee -a log-install.txt
@@ -243,7 +243,7 @@ echo "Timezone : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
 echo "IPv6     : [off]"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Original Script by Fornesia, Rzengineer & Fawzya"  | tee -a log-install.txt
-echo "Modified by Bustami Arifin"  | tee -a log-install.txt
+echo "Modified by Kumpul4semut"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Log Instalasi --> /root/log-install.txt"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
