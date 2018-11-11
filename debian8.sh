@@ -34,92 +34,9 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service ssh restart
 
 # set repo
-ver=`cat /etc/debian_version`
-if [ $ver = '8.0' ]
-then
-debver='8'
-elif [ $ver = '8.1' ]
-then
-debver='8'
-elif [ $ver = '8.2' ]
-then
-debver='8'
-elif [ $ver = '8.3' ]
-then
-debver='8'
-elif [ $ver = '8.4' ]
-then
-debver='8'
-elif [ $ver = '8.5' ]
-then
-debver='8'
-elif [ $ver = '8.6' ]
-then
-debver='8'
-elif [ $ver = '8.7' ]
-then
-debver='8'
-elif [ $ver = '8.8' ]
-then
-debver='8'
-elif [ $ver = '8.9' ]
-then
-debver='8'
-else
-debver='Null'
-fi
-if [ $debver = '8' ]; then
-	if [[ "$loc" = "I" ]]; then
-		wget -O /etc/apt/sources.list $source/sources.list.debian8
-		wget $source/dotdeb.gpg
-		cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
-		cd /root
-		wget http://www.webmin.com/jcameron-key.asc
-		apt-key add jcameron-key.asc
-		cd
-		apt-get update
-	elif [[ "$loc" = "L" ]]; then
-		wget -O /etc/apt/sources.list $source/sources.list.debian8.local
-		wget $source/dotdeb.gpg
-		apt-key add dotdeb.gpg
-		rm dotdeb.gpg
-		apt-get install python-software-properties 
-		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-		cd /root
-		wget http://www.webmin.com/jcameron-key.asc
-		apt-key add jcameron-key.asc
-		cd
-    apt-get update
-	elif [[ "$loc" = "i" ]]; then
-		wget -O /etc/apt/sources.list $source/sources.list.debian8
-		wget $source/dotdeb.gpg
-		cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
-		cd /root
-		wget http://www.webmin.com/jcameron-key.asc
-		apt-key add jcameron-key.asc
-		cd
-		apt-get update
-	elif [[ "$loc" = "l" ]]; then
-		wget -O /etc/apt/sources.list $source/sources.list.debian8.local
-		wget $source/dotdeb.gpg
-		apt-key add dotdeb.gpg
-		rm dotdeb.gpg
-		apt-get install python-software-properties 
-		apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-		cd /root
-		wget http://www.webmin.com/jcameron-key.asc
-		apt-key add jcameron-key.asc
-		cd
-		apt-get update
-	fi
-else
-	cd
-fi
-
-gpg --keyserver pgpkeys.mit.edu --recv-key  9D6D8F6BC857C906      
-gpg -a --export 9D6D8F6BC857C906 | sudo apt-key add -
-gpg --keyserver pgpkeys.mit.edu --recv-key  7638D0442B90D010      
-gpg -a --export 7638D0442B90D010 | sudo apt-key add -
+wget -O /etc/apt/sources.list "https://raw.githubusercontent.com/rizal180499/Auto-Installer-VPS/master/conf/sources.list.debian7"
+wget "http://www.dotdeb.org/dotdeb.gpg"
+cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
 
 # remove unused
 apt-get -y --purge remove samba*;
