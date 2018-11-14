@@ -1,4 +1,8 @@
-ADD MENU + Compiler
+#!/bin/bash
+# go to root
+cd
+
+#ADD MENU + Compiler
 
 wget -q https://raw.githubusercontent.com/Mr-Kenyut/VPS/master/menu.sh
 dos2unix /root/fornesia87/menu.sh
